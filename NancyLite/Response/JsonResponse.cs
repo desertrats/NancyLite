@@ -1,27 +1,39 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using System;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace NancyLite
 {
     public class JsonResponse : NancyLiteResponse
     {
-        private const string contentType = "application/json;charset=utf-8";
+        private const string ContentType = "application/json;charset=utf-8";
 
-        public string _content { get; set; }
+        public string Content { get; set; }
         public int StatusCode { get; set; }
 
         public JsonResponse(object obj, int code = 200)
         {
-            _content = JsonConvert.SerializeObject(obj);
+            Content = JsonConvert.SerializeObject(obj);
             StatusCode = code;
         }
 
         public JsonResponse(string content, int code = 200)
         {
-            _content = content;
+            Content = content;
             StatusCode = code;
+        }
+        public JsonResponse(object obj, HttpStatusCode code)
+        {
+            Content = JsonConvert.SerializeObject(obj);
+            StatusCode = (int)code;
+        }
+
+        public JsonResponse(string content, HttpStatusCode code)
+        {
+            Content = content;
+            StatusCode = (int)code;
         }
 
         public static explicit operator JsonResponse(string content)
@@ -34,8 +46,8 @@ namespace NancyLite
             return async context => 
             {
                 context.Response.StatusCode = StatusCode;
-                context.Response.ContentType = contentType;
-                await context.Response.WriteAsync(_content); 
+                context.Response.ContentType = ContentType;
+                await context.Response.WriteAsync(Content); 
             };
         }
     }

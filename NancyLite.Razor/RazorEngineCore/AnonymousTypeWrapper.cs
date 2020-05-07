@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Dynamic;
 using System.Linq;
-using System.Reflection;
-using System.Runtime.CompilerServices;
 
 namespace RazorEngineCore
 {
@@ -18,7 +15,7 @@ namespace RazorEngineCore
 
         public override bool TryGetMember(GetMemberBinder binder, out object result)
         {
-            PropertyInfo propertyInfo = this.model.GetType().GetProperty(binder.Name);
+            var propertyInfo = model.GetType().GetProperty(binder.Name);
 
             if (propertyInfo == null)
             {

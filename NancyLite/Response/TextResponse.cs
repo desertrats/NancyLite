@@ -1,18 +1,24 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace NancyLite
 {
     public class TextResponse : NancyLiteResponse
     {
-        private const string contentType = "text/plain;charset=utf-8";
-        private string _content;
+        private const string ContentType = "text/plain;charset=utf-8";
+        private readonly string _content;
         public int StatusCode { get; set; }
 
         public TextResponse(string content, int code = 200)
         {
             StatusCode = code;
+            _content = content;
+        }
+        public TextResponse(string content, HttpStatusCode code)
+        {
+            StatusCode = (int)code;
             _content = content;
         }
 
@@ -26,7 +32,7 @@ namespace NancyLite
             return async context =>
             { 
                 context.Response.StatusCode = StatusCode;
-                context.Response.ContentType = contentType;
+                context.Response.ContentType = ContentType;
                 await context.Response.WriteAsync(_content);
             };
         }

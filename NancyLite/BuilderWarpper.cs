@@ -35,30 +35,27 @@ namespace NancyLite
                 var config = scope.ServiceProvider.GetService<NancyLiteConfig>();
                 foreach (var module in scope.ServiceProvider.GetServices<NancyLiteModule>())
                 {
-                    foreach (var route in module.Routes)
+                    foreach (var ((method, path), value) in module.Routes)
                     {
                         var conventionBuilder = builder.MapMethods
                         (
-                            route.Key.path, 
-                            new[] { route.Key.method },
+                            path, 
+                            new[] {method},
                             async context =>
                             {
                                 var sw = new System.Diagnostics.Stopwatch();
                                 sw.Start();
-                                config.Before?.Invoke(context);                                
-                                if (config != null)
-                                {                                   
-                                    context.Response.OnStarting
-                                    (
-                                        x =>
-                                        {
-                                            config.After?.Invoke(context);
-                                            return Task.CompletedTask;
-                                        }, null
-                                    );
-                                }
-                                
-                                await route.Value.Invoke(context);
+                                config.Before?.Invoke(context);
+                                context.Response.OnStarting
+                                (
+                                    x =>
+                                    {
+                                        config.After?.Invoke(context);
+                                        return Task.CompletedTask;
+                                    }, null
+                                );
+
+                                await value.Invoke(context);
                                 sw.Stop();
                                 Console.WriteLine($" {context.Request.Path.Value} takes {sw.ElapsedMilliseconds} ms");
                             }
@@ -74,15 +71,13 @@ namespace NancyLite
 
         private static IEnumerable<Type> GetModules(IReadOnlyCollection<Assembly> assemblies)
         {
-            IEnumerable<Type> modules;
-
-                modules = assemblies.SelectMany(x => x.GetTypes()
-                    .Where(t =>
-                        !t.IsAbstract &&
-                        typeof(NancyLiteModule).IsAssignableFrom(t) &&
-                        t != typeof(NancyLiteModule) &&
-                        t.IsPublic
-                    ));
+            var modules = assemblies.SelectMany(x => x.GetTypes()
+                .Where(t =>
+                    !t.IsAbstract &&
+                    typeof(NancyLiteModule).IsAssignableFrom(t) &&
+                    t != typeof(NancyLiteModule) &&
+                    t.IsPublic
+                ));
 
             return modules;
         }

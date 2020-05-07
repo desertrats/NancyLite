@@ -26,9 +26,9 @@ namespace NancyLite
         public static Dictionary<string, string> GetAllQuery(this HttpContext context)
         {
             var result = new Dictionary<string, string>();
-            foreach(var kvp in context.Request.Query)
+            foreach(var (key, value) in context.Request.Query)
             {
-               if(!result.ContainsKey(kvp.Key)) result.Add(kvp.Key, kvp.Value.ToString());
+               if(!result.ContainsKey(key)) result.Add(key, value.ToString());
             }
             return result;
         }

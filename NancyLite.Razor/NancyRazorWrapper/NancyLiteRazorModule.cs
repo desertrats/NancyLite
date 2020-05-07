@@ -1,6 +1,4 @@
-﻿using System.Dynamic;
-
-namespace NancyLite.Razor
+﻿namespace NancyLite.Razor
 {
     public class NancyLiteRazorModule : NancyLiteModule
     {

@@ -7,18 +7,19 @@ namespace NancyLite
 {
     public class RedirectResponse : NancyLiteResponse
     {
-        private int _statucCode;
-        private bool _forwardQuery;
-        public string RedirTo { get; private set; }
-        public RedirectResponse(string redirTo, bool permanent = true, bool forwardQuery=false)
+        private readonly int _statusCode;
+        private readonly bool _forwardQuery;
+        public string RedirectTo { get; private set; }
+        public RedirectResponse(string redirectTo, bool permanent = true, bool forwardQuery = false)
         {
-            _statucCode = permanent ? 301 : 302;
-            RedirTo = redirTo;
+            _statusCode = permanent ? 301 : 302;
+            RedirectTo = redirectTo;
+            _forwardQuery = forwardQuery;
         }
-        public RedirectResponse(string redirTo, int code, bool forwardQuery = false)
+        public RedirectResponse(string redirectTo, int code, bool forwardQuery = false)
         {
-            _statucCode = code;
-            RedirTo = redirTo;
+            _statusCode = code;
+            RedirectTo = redirectTo;
             _forwardQuery = forwardQuery;
         }
         public override Func<HttpContext, Task> BuildDelegate()
@@ -27,25 +28,25 @@ namespace NancyLite
             {
                 if (_forwardQuery)
                 {
-                    var mRedirTo = new StringBuilder(RedirTo);
+                    var mRedirectTo = new StringBuilder(RedirectTo);
                     var dict = context.GetAllQuery();
                     var first = true;
-                    foreach(var kvp in dict)
+                    foreach(var (key, value) in dict)
                     {
                         if (first)
                         {
-                            mRedirTo.Append($"?{kvp.Key}={kvp.Value}");
+                            mRedirectTo.Append($"?{key}={value}");
                             first = false;
                         }
                         else
                         {
-                            mRedirTo.Append($"&{kvp.Key}={kvp.Value}");
+                            mRedirectTo.Append($"&{key}={value}");
                         }
-                        RedirTo = mRedirTo.ToString();
+                        RedirectTo = mRedirectTo.ToString();
                     }
                 }
-                context.Response.Redirect(RedirTo);
-                context.Response.StatusCode = _statucCode;
+                context.Response.Redirect(RedirectTo);
+                context.Response.StatusCode = _statusCode;
                 return Task.CompletedTask;
             };
         }

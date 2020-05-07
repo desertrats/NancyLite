@@ -9,11 +9,11 @@ namespace NancyLite
     public class ScopeAssembly
     {
         private readonly DependencyContext dependencyContext;
-        private static readonly string assemblyName;
+        private static readonly string AssemblyName;
 
        static ScopeAssembly()
         {
-            assemblyName = typeof(BuilderWarpper).Assembly.GetName().Name;
+            AssemblyName = typeof(BuilderWarpper).Assembly.GetName().Name;
         }
         public ScopeAssembly()
             : this(Assembly.GetEntryAssembly())
@@ -57,7 +57,7 @@ namespace NancyLite
         }
         private static bool ReferencedMe(Library library)
         {
-            return library.Dependencies.Any(dependency => dependency.Name.Equals(assemblyName));
+            return library.Dependencies.Any(dependency => dependency.Name.Equals(AssemblyName));
         }
 
     }

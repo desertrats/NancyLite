@@ -13,7 +13,7 @@ namespace NancyLite.Razor
         private readonly ConcurrentDictionary<string, string> caches = new ConcurrentDictionary<string, string>();
         public string GetContent(string relativePath)
         {
-            if (caches.TryGetValue(relativePath, out string cacheContent))
+            if (caches.TryGetValue(relativePath, out var cacheContent))
             {
                 return cacheContent;
             }

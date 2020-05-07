@@ -11,13 +11,13 @@
             _module = module;
         }
 
-        public HtmlReponse this[string viewName]
+        public HtmlResponse this[string viewName]
         {
             get => _razor.Render(viewName, _module.ViewBag.Duplicate(), _module.ViewBag.Duplicate());
         }
 
 
-        public HtmlReponse this[string viewName, dynamic model]
+        public HtmlResponse this[string viewName, dynamic model]
         {
             get => _razor.Render(viewName, model, _module.ViewBag.Duplicate());
         }

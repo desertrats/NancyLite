@@ -10,7 +10,7 @@ namespace RazorEngineCore
     {
         public static ExpandoObject ToExpando(this object obj)
         {
-            ExpandoObject expando = new ExpandoObject();
+            var expando = new ExpandoObject();
             IDictionary<string, object> dictionary = expando;
 
             foreach (var property in obj.GetType().GetProperties())
@@ -23,7 +23,7 @@ namespace RazorEngineCore
 
         public static bool IsAnonymous(this object obj)
         {
-            Type type = obj.GetType();
+            var type = obj.GetType();
 
             return Attribute.IsDefined(type, typeof(CompilerGeneratedAttribute), false)
                    && type.IsGenericType && type.Name.Contains("AnonymousType")

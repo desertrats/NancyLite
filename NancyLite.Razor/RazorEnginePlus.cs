@@ -10,9 +10,9 @@ namespace NancyLite.Razor
     {
         private readonly ILogger<RazorEnginePlus> logProvider;
         private readonly NancyLiteRazorConfig config;
-        public RazorEnginePlus( ILogger<RazorEnginePlus> ilogProvider, NancyLiteRazorConfig razorConfig)
+        public RazorEnginePlus( ILogger<RazorEnginePlus> iLogProvider, NancyLiteRazorConfig razorConfig)
         {
-            logProvider = ilogProvider;
+            logProvider = iLogProvider;
             config = razorConfig;
         }
 
@@ -100,7 +100,7 @@ namespace NancyLite.Razor
 
             return null;
         }
-        public HtmlReponse Render(string viewPath, dynamic model = null, dynamic viewBag = null, HttpStatusCode code = HttpStatusCode.OK, bool throwErrorOnFailed = true)
+        public HtmlResponse Render(string viewPath, dynamic model = null, dynamic viewBag = null, HttpStatusCode code = HttpStatusCode.OK, bool throwErrorOnFailed = true)
         {
             var rawContent = RenderRaw(viewPath, model, viewBag);
             if (rawContent == null)
@@ -111,7 +111,7 @@ namespace NancyLite.Razor
                 }
                 return null;
             }
-            var response = new HtmlReponse(rawContent);
+            var response = new HtmlResponse(rawContent);
             response.StatusCode = (int)code;
             return response;
         }

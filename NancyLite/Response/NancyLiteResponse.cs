@@ -18,7 +18,7 @@ namespace NancyLite
 
         public static implicit operator NancyLiteResponse(string content)
         {
-            return new HtmlReponse(content);
+            return new HtmlResponse(content);
         }
 
         public static implicit operator NancyLiteResponse(Stream content)
@@ -50,5 +50,19 @@ namespace NancyLite
             return new TextResponse(msg, code);
         }
 
+        public static NancyLiteResponse AsJson(object jsObj, HttpStatusCode code)
+        {
+            return new JsonResponse(jsObj, code);
+        }
+
+        public static NancyLiteResponse AsJson(string jsStr, HttpStatusCode code)
+        {
+            return new JsonResponse(jsStr, code);
+        }
+
+        public static NancyLiteResponse AsText(string msg, HttpStatusCode code)
+        {
+            return new TextResponse(msg, code);
+        }
     }
 }

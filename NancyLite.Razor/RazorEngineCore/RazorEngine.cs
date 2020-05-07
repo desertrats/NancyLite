@@ -15,12 +15,12 @@ namespace RazorEngineCore
 
         public RazorEngineCompiledTemplate Compile(string content, Action<RazorEngineCompilationOptionsBuilder> builderAction = null)
         {
-            RazorEngineCompilationOptionsBuilder compilationOptionsBuilder = new RazorEngineCompilationOptionsBuilder();
+            var compilationOptionsBuilder = new RazorEngineCompilationOptionsBuilder();
             compilationOptionsBuilder.Inherits(typeof(RazorEngineTemplateBase));
              
             builderAction?.Invoke(compilationOptionsBuilder);
 
-            MemoryStream memoryStream = CreateAndCompileToStream(content, compilationOptionsBuilder.Options);
+            var memoryStream = CreateAndCompileToStream(content, compilationOptionsBuilder.Options);
 
             return new RazorEngineCompiledTemplate(memoryStream);
         }
@@ -37,7 +37,7 @@ namespace RazorEngineCore
                     builder.SetNamespace(options.TemplateNamespace);
                 });
 
-            string fileName = Path.GetRandomFileName();
+            var fileName = Path.GetRandomFileName();
 
             var document = RazorSourceDocument.Create(templateSource, fileName);
 
@@ -65,7 +65,7 @@ namespace RazorEngineCore
 
             if (!emitResult.Success)
             {
-                List<Diagnostic> errors = emitResult.Diagnostics.ToList();
+                var errors = emitResult.Diagnostics.ToList();
                 var errorMsg = JsonConvert.SerializeObject(emitResult.Diagnostics.Select(x => x.GetMessage()).ToList(), Formatting.Indented);
                 var exception = new RazorEngineCompilationException($"Unable to compile template: {errorMsg}" )
                 {
@@ -79,12 +79,12 @@ namespace RazorEngineCore
             return memoryStream;
         }
 
-        private string WriteDirectives(string content, RazorEngineCompilationOptions options)
+        private static string WriteDirectives(string content, RazorEngineCompilationOptions options)
         {
-            StringBuilder stringBuilder = new StringBuilder();
+            var stringBuilder = new StringBuilder();
             stringBuilder.AppendLine("@inherits " + options.Inherits);
 
-            foreach (string entry in options.DefaultUsings)
+            foreach (var entry in options.DefaultUsings)
             {
                 stringBuilder.AppendLine("@using " + entry);
             }

@@ -7,19 +7,19 @@ namespace NancyLite
 {
     public class StatusCodeResponse : NancyLiteResponse
     {
-        private int _statucCode;
+        private readonly int _statusCode;
         public string Content { get; set; }
         public string MimeType { get; set; }
         public StatusCodeResponse(int code)
         {
-            _statucCode = code;
+            _statusCode = code;
         }
 
         public override Func<HttpContext, Task> BuildDelegate()
         {
             return async context => 
             {
-                context.Response.StatusCode = _statucCode;
+                context.Response.StatusCode = _statusCode;
                 if(Content != null)
                 {
                     await context.Response.WriteAsync(Content);

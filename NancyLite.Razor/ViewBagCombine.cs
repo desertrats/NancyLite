@@ -1,19 +1,17 @@
-﻿using System.Collections.Generic;
-
-namespace NancyLite.Razor
+﻿namespace NancyLite.Razor
 {
     public static class ViewBagCombine
     {
-        public static dynamic Combine(dynamic src, dynamic appendex)
+        public static dynamic Combine(dynamic src, dynamic appendEx)
         {
-            if (appendex != null && appendex.Count > 0)
+            if (appendEx != null && appendEx.Count > 0)
             {
                 //if (instance.ViewBag == null) instance.ViewBag = new ExpandoObject();
                 //var tempDict = (IDictionary<string, object>)src;
 
-                foreach (var key in appendex.Keys)
+                foreach (var key in appendEx.Keys)
                 {
-                    if (!src.ContainsKey(key)) src.Add(key, appendex[key]);
+                    if (!src.ContainsKey(key)) src.Add(key, appendEx[key]);
                 }
             }
             return src;

@@ -8,7 +8,7 @@ namespace NancyLite.Razor
 {
     public static class BuilderWarpper
     {
-        private static readonly NancyLiteRazorConfig defaultConfig = new NancyLiteRazorConfig
+        private static readonly NancyLiteRazorConfig DefaultConfig = new NancyLiteRazorConfig
         {
             DefaultBuildAction = x => x.AddAssemblyReference(Assembly.GetEntryAssembly()),
             CompiledViewProvider = new DefaultCompiledViewProvider(),
@@ -18,7 +18,7 @@ namespace NancyLite.Razor
         {            
             if(config == null)
             {
-                services.AddSingleton(defaultConfig);
+                services.AddSingleton(DefaultConfig);
             }
             else
             {

@@ -9,7 +9,7 @@ namespace NancyLite.Razor
 
         public RazorEngineCompiledTemplate Get(string name)
         {
-            if (caches.TryGetValue(name, out RazorEngineCompiledTemplate content))
+            if (caches.TryGetValue(name, out var content))
             {
                 return content;
             }

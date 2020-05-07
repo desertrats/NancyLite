@@ -15,7 +15,7 @@ namespace RazorEngineCore
 
         public void AddAssemblyReferenceByName(string assemblyName)
         {
-            Assembly assembly = Assembly.Load(new AssemblyName(assemblyName));
+            var assembly = Assembly.Load(new AssemblyName(assemblyName));
             AddAssemblyReference(assembly);
         }
 
@@ -33,7 +33,7 @@ namespace RazorEngineCore
         {
             AddAssemblyReference(type.Assembly);
 
-            foreach (Type argumentType in type.GenericTypeArguments)
+            foreach (var argumentType in type.GenericTypeArguments)
             {
                 AddAssemblyReference(argumentType);
             }
@@ -52,7 +52,7 @@ namespace RazorEngineCore
 
         private string RenderTypeName(Type type)
         {
-            string result = type.Namespace + "." + type.Name;
+            var result = type.Namespace + "." + type.Name;
 
             if (result.Contains('`'))
             {
