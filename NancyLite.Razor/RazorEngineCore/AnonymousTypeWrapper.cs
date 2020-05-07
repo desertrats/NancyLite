@@ -39,9 +39,9 @@ namespace RazorEngineCore
 
             if (type.IsArray)
             {
-                result = ((IEnumerable<object>) result).Select(e => new AnonymousTypeWrapper(e)).ToList();
+                result = ((IEnumerable<object>)result).Select(e => new AnonymousTypeWrapper(e)).ToList();
             }
-            
+
             return true;
         }
     }

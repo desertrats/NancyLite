@@ -9,11 +9,7 @@ namespace NancyLite.Razor
 
         public RazorEngineCompiledTemplate Get(string name)
         {
-            if (caches.TryGetValue(name, out var content))
-            {
-                return content;
-            }
-            return null;
+            return caches.TryGetValue(name, out var content) ? content : null;
         }
 
         public bool HasCompiledView(string name)
@@ -23,8 +19,7 @@ namespace NancyLite.Razor
 
         public bool SetView(string name, RazorEngineCompiledTemplate template)
         {
-            caches.AddOrUpdate(name, template, (name, odlTemplate) => template);
-            return true;
+            return caches.AddOrUpdate(name, template, (key, oldTemplate) => template) == template;
         }
     }
 }

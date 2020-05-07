@@ -1,6 +1,6 @@
 ﻿namespace NancyLite.Razor
 {
-    public class HtmlExtensionBase 
+    public class HtmlExtensionBase
     {
         public HtmlExtensionBase(dynamic viewBag)
         {

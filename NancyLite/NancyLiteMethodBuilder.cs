@@ -16,13 +16,10 @@ namespace NancyLite
 
         public Func<HttpContext, NancyLiteResponse> this[string path]
         {
-            set
-            {
-                _module.Add(_method, path, GetRequestDelegate(value));
-            }
+            set => _module.Add(_method, path, GetRequestDelegate(value));
         }
 
-        public Func<HttpContext,Task> GetRequestDelegate(Func<HttpContext, NancyLiteResponse> incoming)
+        public Func<HttpContext, Task> GetRequestDelegate(Func<HttpContext, NancyLiteResponse> incoming)
         {
             return async context =>
             {

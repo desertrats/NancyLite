@@ -31,7 +31,7 @@ namespace NancyLite
                     var mRedirectTo = new StringBuilder(RedirectTo);
                     var dict = context.GetAllQuery();
                     var first = true;
-                    foreach(var (key, value) in dict)
+                    foreach (var (key, value) in dict)
                     {
                         if (first)
                         {

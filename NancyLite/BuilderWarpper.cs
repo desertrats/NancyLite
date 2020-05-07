@@ -39,8 +39,8 @@ namespace NancyLite
                     {
                         var conventionBuilder = builder.MapMethods
                         (
-                            path, 
-                            new[] {method},
+                            path,
+                            new[] { method },
                             async context =>
                             {
                                 var sw = new System.Diagnostics.Stopwatch();

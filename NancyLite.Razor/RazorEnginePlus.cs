@@ -10,7 +10,7 @@ namespace NancyLite.Razor
     {
         private readonly ILogger<RazorEnginePlus> logProvider;
         private readonly NancyLiteRazorConfig config;
-        public RazorEnginePlus( ILogger<RazorEnginePlus> iLogProvider, NancyLiteRazorConfig razorConfig)
+        public RazorEnginePlus(ILogger<RazorEnginePlus> iLogProvider, NancyLiteRazorConfig razorConfig)
         {
             logProvider = iLogProvider;
             config = razorConfig;
@@ -111,9 +111,11 @@ namespace NancyLite.Razor
                 }
                 return null;
             }
-            var response = new HtmlResponse(rawContent);
-            response.StatusCode = (int)code;
-            return response;
+
+            return new HtmlResponse(rawContent)
+            {
+                StatusCode = (int)code
+            };
         }
 
         public string RenderRawSub(string viewPath, ref dynamic viewBag, dynamic model = null)

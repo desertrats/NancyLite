@@ -21,7 +21,7 @@ namespace RazorEngineCore
 
         public void AddAssemblyReference(Assembly assembly)
         {
-            if (this.Options.ReferencedAssemblies.Contains(assembly))
+            if (Options.ReferencedAssemblies.Contains(assembly))
             {
                 return;
             }
@@ -41,7 +41,7 @@ namespace RazorEngineCore
 
         public void AddUsing(string namespaceName)
         {
-            if(!Options.DefaultUsings.Contains(namespaceName)) Options.DefaultUsings.Add(namespaceName);
+            if (!Options.DefaultUsings.Contains(namespaceName)) Options.DefaultUsings.Add(namespaceName);
         }
 
         public void Inherits(Type type)
@@ -50,13 +50,13 @@ namespace RazorEngineCore
             AddAssemblyReference(type);
         }
 
-        private string RenderTypeName(Type type)
+        private static string RenderTypeName(Type type)
         {
             var result = type.Namespace + "." + type.Name;
 
             if (result.Contains('`'))
             {
-                result = result.Substring(0, result.IndexOf("`"));
+                result = result.Substring(0, result.IndexOf("`", StringComparison.Ordinal));
             }
 
             if (type.GenericTypeArguments.Length == 0)

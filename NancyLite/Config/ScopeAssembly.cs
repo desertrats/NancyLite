@@ -11,7 +11,7 @@ namespace NancyLite
         private readonly DependencyContext dependencyContext;
         private static readonly string AssemblyName;
 
-       static ScopeAssembly()
+        static ScopeAssembly()
         {
             AssemblyName = typeof(BuilderWarpper).Assembly.GetName().Name;
         }

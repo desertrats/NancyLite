@@ -14,9 +14,9 @@ namespace NancyLite.Razor
             CompiledViewProvider = new DefaultCompiledViewProvider(),
             RawViewProvider = new DefaultViewProvider(Path.Combine(Directory.GetCurrentDirectory(), "View"))
         };
-        public static void RegisterNancyLiteRazor(this IServiceCollection services, NancyLiteRazorConfig config = null)            
-        {            
-            if(config == null)
+        public static void RegisterNancyLiteRazor(this IServiceCollection services, NancyLiteRazorConfig config = null)
+        {
+            if (config == null)
             {
                 services.AddSingleton(DefaultConfig);
             }
@@ -27,7 +27,7 @@ namespace NancyLite.Razor
             services.AddSingleton<RazorEnginePlus>();
         }
 
-        public static void RegisterNancyLiteRazor(this IServiceCollection services, Action<RazorEngineCompilationOptionsBuilder> buildAction,  IViewProvider viewProvider,  ICompiledViewProvider compiledViewProvider)
+        public static void RegisterNancyLiteRazor(this IServiceCollection services, Action<RazorEngineCompilationOptionsBuilder> buildAction, IViewProvider viewProvider, ICompiledViewProvider compiledViewProvider)
         {
             var config = new NancyLiteRazorConfig
             {

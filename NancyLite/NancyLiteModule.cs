@@ -8,7 +8,7 @@ namespace NancyLite
     public class NancyLiteModule
     {
         internal readonly Dictionary<(string method, string path), Func<HttpContext, Task>> Routes;
-        protected NancyLiteModule() 
+        protected NancyLiteModule()
             : this(string.Empty)
         {
 

@@ -2,7 +2,7 @@
 {
     public interface IViewProvider
     {
-        public bool HasView(string relativePath);
-        public string GetContent(string relativePath);
+        bool HasView(string relativePath);
+        string GetContent(string relativePath);
     }
 }

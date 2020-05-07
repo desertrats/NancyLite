@@ -25,9 +25,9 @@ namespace NancyLite
         {
             return async context =>
             {
-                context.Response.StatusCode = StatusCode; 
+                context.Response.StatusCode = StatusCode;
                 context.Response.ContentType = ContentType;
-                await context.Response.WriteAsync(_content); 
+                await context.Response.WriteAsync(_content);
             };
         }
 

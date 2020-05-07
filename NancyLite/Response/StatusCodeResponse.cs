@@ -17,14 +17,14 @@ namespace NancyLite
 
         public override Func<HttpContext, Task> BuildDelegate()
         {
-            return async context => 
+            return async context =>
             {
                 context.Response.StatusCode = _statusCode;
-                if(Content != null)
+                if (Content != null)
                 {
                     await context.Response.WriteAsync(Content);
                 }
-                if(MimeType != null)
+                if (MimeType != null)
                 {
                     context.Response.ContentType = MimeType;
                 }

@@ -30,7 +30,7 @@ namespace NancyLite
         public override Func<HttpContext, Task> BuildDelegate()
         {
             return async context =>
-            { 
+            {
                 context.Response.StatusCode = StatusCode;
                 context.Response.ContentType = ContentType;
                 await context.Response.WriteAsync(_content);

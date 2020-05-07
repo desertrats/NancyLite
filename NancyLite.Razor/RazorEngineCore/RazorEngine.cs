@@ -1,12 +1,12 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Razor.Language;
+using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using Microsoft.AspNetCore.Razor.Language;
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp;
-using Newtonsoft.Json;
 
 namespace RazorEngineCore
 {
@@ -17,7 +17,7 @@ namespace RazorEngineCore
         {
             var compilationOptionsBuilder = new RazorEngineCompilationOptionsBuilder();
             compilationOptionsBuilder.Inherits(typeof(RazorEngineTemplateBase));
-             
+
             builderAction?.Invoke(compilationOptionsBuilder);
 
             var memoryStream = CreateAndCompileToStream(content, compilationOptionsBuilder.Options);
@@ -25,7 +25,7 @@ namespace RazorEngineCore
             return new RazorEngineCompiledTemplate(memoryStream);
         }
 
-        private MemoryStream CreateAndCompileToStream(string templateSource, RazorEngineCompilationOptions options)
+        private static MemoryStream CreateAndCompileToStream(string templateSource, RazorEngineCompilationOptions options)
         {
             templateSource = WriteDirectives(templateSource, options);
 
@@ -54,7 +54,7 @@ namespace RazorEngineCore
             var compilation = CSharpCompilation.Create
             (
                 fileName,
-                new[]{syntaxTree},
+                new[] { syntaxTree },
                 options.ReferencedAssemblies.Select(ass => MetadataReference.CreateFromFile(ass.Location)).ToList(),
                 new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary)
                );
@@ -67,7 +67,7 @@ namespace RazorEngineCore
             {
                 var errors = emitResult.Diagnostics.ToList();
                 var errorMsg = JsonConvert.SerializeObject(emitResult.Diagnostics.Select(x => x.GetMessage()).ToList(), Formatting.Indented);
-                var exception = new RazorEngineCompilationException($"Unable to compile template: {errorMsg}" )
+                var exception = new RazorEngineCompilationException($"Unable to compile template: {errorMsg}")
                 {
                     Errors = errors
                 };

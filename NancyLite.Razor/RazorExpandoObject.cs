@@ -23,11 +23,11 @@ namespace NancyLite.Razor
 
         private readonly Dictionary<string, object> _dictionary = new Dictionary<string, object>();
 
-        public object this[string key] 
+        public object this[string key]
         {
             get
             {
-                if(_dictionary.ContainsKey(key)) return _dictionary[key];
+                if (_dictionary.ContainsKey(key)) return _dictionary[key];
                 return default;
             }
 

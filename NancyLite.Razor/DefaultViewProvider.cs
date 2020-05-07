@@ -18,21 +18,19 @@ namespace NancyLite.Razor
                 return cacheContent;
             }
             var path = Path.Combine(_rootPath, relativePath + ".cshtml");
-            if (File.Exists(path))
-            {
-                var content = File.ReadAllText(path);
-                caches.TryAdd(relativePath, content);
-                return content;
-            }
 
-            return null;
+            if (!File.Exists(path)) return null;
+
+            var content = File.ReadAllText(path);
+            return caches.AddOrUpdate(relativePath, content, (key, oldContent) => content);
         }
 
         public bool HasView(string relativePath)
-        {   
-            if(caches.ContainsKey(relativePath)) return true;
+        {
+            if (caches.ContainsKey(relativePath)) return true;
             var path = Path.Combine(_rootPath, relativePath + ".cshtml");
             return File.Exists(path);
         }
+
     }
 }

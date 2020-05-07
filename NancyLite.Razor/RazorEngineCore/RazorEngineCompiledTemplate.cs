@@ -18,7 +18,7 @@ namespace RazorEngineCore
         {
             this.assemblyByteCode = assemblyByteCode;
 
-            Assembly assembly = Assembly.Load(assemblyByteCode.ToArray());
+            var assembly = Assembly.Load(assemblyByteCode.ToArray());
             templateType = assembly.GetType("TemplateNamespace.Template");
         }
 
@@ -29,7 +29,7 @@ namespace RazorEngineCore
 
         public static RazorEngineCompiledTemplate LoadFromStream(Stream stream)
         {
-            MemoryStream memoryStream = new MemoryStream();
+            var memoryStream = new MemoryStream();
             stream.CopyTo(memoryStream);
             memoryStream.Position = 0;
 
@@ -53,7 +53,10 @@ namespace RazorEngineCore
                 model = new AnonymousTypeWrapper(model);
             }
 
-            var instance = (RazorEngineTemplateBase) Activator.CreateInstance(templateType);
+            var instance = (RazorEngineTemplateBase)Activator.CreateInstance(templateType);
+#if !DEBUG
+            if (instance == null) return "";
+#endif
             instance.Html.Initialize(razor);
             instance.Model = model;
             instance.ViewBag = ViewBagCombine.Combine(instance.ViewBag, viewBag);
@@ -75,6 +78,9 @@ namespace RazorEngineCore
             }
 
             var instance = (RazorEngineTemplateBase)Activator.CreateInstance(templateType);
+#if !DEBUG
+            if (instance == null) return "";
+#endif
             instance.Html.Initialize(razor);
             instance.Model = model;
             instance.ViewBag = ViewBagCombine.Combine(instance.ViewBag, viewBag);
