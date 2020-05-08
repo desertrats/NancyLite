@@ -48,6 +48,7 @@ namespace RazorEngineCore
 
         public string Run(RazorEnginePlus razor, object model = null, dynamic viewBag = null)
         {
+
             if (model != null && model.IsAnonymous())
             {
                 model = new AnonymousTypeWrapper(model);

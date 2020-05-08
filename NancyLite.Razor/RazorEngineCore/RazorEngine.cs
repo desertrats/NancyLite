@@ -32,7 +32,7 @@ namespace RazorEngineCore
             var engine = RazorProjectEngine.Create(
                 RazorConfiguration.Default,
                 RazorProjectFileSystem.Create(@"."),
-                (builder) =>
+                builder =>
                 {
                     builder.SetNamespace(options.TemplateNamespace);
                 });

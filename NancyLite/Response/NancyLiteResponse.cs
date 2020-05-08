@@ -40,10 +40,6 @@ namespace NancyLite
             return new JsonResponse(jsObj, code);
         }
 
-        public static NancyLiteResponse AsJson(string jsStr, int code = 200)
-        {
-            return new JsonResponse(jsStr, code);
-        }
 
         public static NancyLiteResponse AsText(string msg, int code = 200)
         {
@@ -55,10 +51,6 @@ namespace NancyLite
             return new JsonResponse(jsObj, code);
         }
 
-        public static NancyLiteResponse AsJson(string jsStr, HttpStatusCode code)
-        {
-            return new JsonResponse(jsStr, code);
-        }
 
         public static NancyLiteResponse AsText(string msg, HttpStatusCode code)
         {

@@ -12,6 +12,7 @@ namespace RazorEngineCore
             typeof(RazorEngineTemplateBase).Assembly,
             Assembly.Load(new AssemblyName("netstandard")),
             Assembly.Load(new AssemblyName("System.Runtime")),
+            Assembly.Load(new AssemblyName("System.Collections")),
             Assembly.Load(new AssemblyName("System.Linq")),
             Assembly.Load(new AssemblyName("System.Linq.Expressions")),
         };

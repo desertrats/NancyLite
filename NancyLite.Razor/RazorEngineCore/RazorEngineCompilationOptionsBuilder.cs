@@ -21,11 +21,7 @@ namespace RazorEngineCore
 
         public void AddAssemblyReference(Assembly assembly)
         {
-            if (Options.ReferencedAssemblies.Contains(assembly))
-            {
-                return;
-            }
-
+            if (Options.ReferencedAssemblies.Contains(assembly)) return;
             Options.ReferencedAssemblies.Add(assembly);
         }
 
