@@ -9,6 +9,9 @@ namespace NancyLite
         {
             try
             {
+                if (typeof(TValue).IsEnum)
+                    return (TValue)Enum.Parse(typeof(TValue), strValue);
+
                 return (TValue)Convert.ChangeType(strValue, typeof(TValue));
             }
             catch (Exception)

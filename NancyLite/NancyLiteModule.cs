@@ -15,7 +15,7 @@ namespace NancyLite
         }
         protected NancyLiteModule(string path)
         {
-            basePath = path;
+            BasePath = path;
             Routes = new Dictionary<(string method, string path), Func<HttpContext, Task>>();
             Get = new NancyLiteMethodBuilder(this, HttpMethods.Get);
             Post = new NancyLiteMethodBuilder(this, HttpMethods.Post);
@@ -23,7 +23,8 @@ namespace NancyLite
             Put = new NancyLiteMethodBuilder(this, HttpMethods.Put);
             Head = new NancyLiteMethodBuilder(this, HttpMethods.Head);
         }
-        private readonly string basePath;
+
+        public string BasePath { get; }
 
         public readonly NancyLiteMethodBuilder Get;
         public readonly NancyLiteMethodBuilder Post;
@@ -33,7 +34,7 @@ namespace NancyLite
 
         internal bool Add(string method, string path, Func<HttpContext, Task> requestDelegate)
         {
-            var fullPath = basePath + path;
+            var fullPath = BasePath + path;
             if (Routes.ContainsKey((method, fullPath))) return false;
             Routes.Add((method, fullPath), requestDelegate);
             return true;

@@ -37,14 +37,17 @@ namespace NancyLite
                 {
                     foreach (var ((method, path), value) in module.Routes)
                     {
+                        config.RegisterRouter(method,module.BasePath, path);
                         var conventionBuilder = builder.MapMethods
                         (
                             path,
                             new[] { method },
                             async context =>
                             {
+#if DEBUG
                                 var sw = new System.Diagnostics.Stopwatch();
                                 sw.Start();
+#endif
                                 config.Before?.Invoke(context);
                                 context.Response.OnStarting
                                 (
@@ -56,8 +59,10 @@ namespace NancyLite
                                 );
 
                                 await value.Invoke(context);
+#if DEBUG
                                 sw.Stop();
                                 Console.WriteLine($" {context.Request.Path.Value} takes {sw.ElapsedMilliseconds} ms");
+#endif
                             }
                         );
                         builders.Add(conventionBuilder);
