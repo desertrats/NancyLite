@@ -9,7 +9,7 @@ namespace NancyLite
         public static TValue GetForm<TValue>(this HttpContext context, string queryName, TValue defaultValue = default, Func<string, TValue, TValue> convertor = null)
         {
             if (convertor == null) convertor = StringValueConvertor.ChangeTypeConvertor;
-            if (context.Request.Form.ContainsKey(queryName))
+            if (context.HasForm(queryName))
             {
                 var strValue = context.Request.Form[queryName].ToString();
                 return convertor(strValue, defaultValue);
@@ -19,7 +19,7 @@ namespace NancyLite
 
         public static bool HasForm(this HttpContext context, string queryName)
         {
-            return context.Request.Form.ContainsKey(queryName);
+            return context.Request.HasFormContentType && context.Request.Form.ContainsKey(queryName);
         }
     }
 }

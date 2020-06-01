@@ -9,7 +9,7 @@ namespace NancyLite
         public static TValue GetQuery<TValue>(this HttpContext context, string queryName, TValue defaultValue = default, Func<string, TValue, TValue> convertor = null)
         {
             if (convertor == null) convertor = StringValueConvertor.ChangeTypeConvertor;
-            if (context.Request.Query.ContainsKey(queryName))
+            if (context.HasQuery(queryName))
             {
                 var strValue = context.Request.Query[queryName].ToString();
                 return convertor(strValue, defaultValue);
