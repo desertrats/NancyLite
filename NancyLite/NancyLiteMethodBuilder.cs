@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace NancyLite
@@ -26,5 +27,6 @@ namespace NancyLite
                 await incoming(context).BuildDelegate().Invoke(context);
             };
         }
+
     }
 }

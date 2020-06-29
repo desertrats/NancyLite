@@ -22,6 +22,12 @@ namespace NancyLite
             Delete = new NancyLiteMethodBuilder(this, HttpMethods.Delete);
             Put = new NancyLiteMethodBuilder(this, HttpMethods.Put);
             Head = new NancyLiteMethodBuilder(this, HttpMethods.Head);
+
+            GetAsync = new NancyLiteAsyncMethodBuilder(this, HttpMethods.Get);
+            PostAsync = new NancyLiteAsyncMethodBuilder(this, HttpMethods.Post);
+            DeleteAsync = new NancyLiteAsyncMethodBuilder(this, HttpMethods.Delete);
+            PutAsync = new NancyLiteAsyncMethodBuilder(this, HttpMethods.Put);
+            HeadAsync = new NancyLiteAsyncMethodBuilder(this, HttpMethods.Head);
         }
 
         public string BasePath { get; }
@@ -31,6 +37,13 @@ namespace NancyLite
         public readonly NancyLiteMethodBuilder Delete;
         public readonly NancyLiteMethodBuilder Put;
         public readonly NancyLiteMethodBuilder Head;
+
+        
+        public readonly NancyLiteAsyncMethodBuilder GetAsync;
+        public readonly NancyLiteAsyncMethodBuilder PostAsync;
+        public readonly NancyLiteAsyncMethodBuilder DeleteAsync;
+        public readonly NancyLiteAsyncMethodBuilder PutAsync;
+        public readonly NancyLiteAsyncMethodBuilder HeadAsync;
 
         internal bool Add(string method, string path, Func<HttpContext, Task> requestDelegate)
         {
