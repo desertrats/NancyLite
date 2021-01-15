@@ -12,7 +12,7 @@ namespace NancyLite.Razor
         {
 
         }
-        private RazorExpandoObject(Dictionary<string, object> src)
+        private RazorExpandoObject(IDictionary<string, object> src)
         {
             _dictionary = new Dictionary<string, object>(src);
         }

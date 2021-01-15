@@ -7,11 +7,11 @@ namespace RazorEngineCore
 {
     public abstract class RazorEngineTemplateBase
     {
-        public RazorEngineTemplateBase()
+        protected RazorEngineTemplateBase()
         {
             Html = new HtmlExtensionBase(ViewBag);
         }
-        //XW add viewbag support
+        //XW add viewBag support
         public dynamic ViewBag = new RazorExpandoObject();
 
         public HtmlExtensionBase Html { get; set; }

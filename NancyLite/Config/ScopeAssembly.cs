@@ -13,7 +13,7 @@ namespace NancyLite
 
         static ScopeAssembly()
         {
-            AssemblyName = typeof(BuilderWarpper).Assembly.GetName().Name;
+            AssemblyName = typeof(BuilderWrapper).Assembly.GetName().Name;
         }
         public ScopeAssembly()
             : this(Assembly.GetEntryAssembly())
@@ -33,12 +33,10 @@ namespace NancyLite
 
             foreach (var library in dependencyContext.RuntimeLibraries)
             {
-                if (ReferencedMe(library))
+                if (!ReferencedMe(library)) continue;
+                foreach (var assemblyName in library.GetDefaultAssemblyNames(dependencyContext))
                 {
-                    foreach (var assemblyName in library.GetDefaultAssemblyNames(dependencyContext))
-                    {
-                        results.Add(SafeLoadAssembly(assemblyName));
-                    }
+                    results.Add(SafeLoadAssembly(assemblyName));
                 }
             }
 

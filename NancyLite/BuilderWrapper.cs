@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace NancyLite
 {
-    public static class BuilderWarpper
+    public static class BuilderWrapper
     {
         public static void RegisterNancyLite(this IServiceCollection services)
         {
@@ -74,7 +74,7 @@ namespace NancyLite
         }
 
 
-        private static IEnumerable<Type> GetModules(IReadOnlyCollection<Assembly> assemblies)
+        private static IEnumerable<Type> GetModules(IEnumerable<Assembly> assemblies)
         {
             var modules = assemblies.SelectMany(x => x.GetTypes()
                 .Where(t =>

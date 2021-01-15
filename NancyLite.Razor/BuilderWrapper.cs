@@ -6,7 +6,7 @@ using System.Reflection;
 
 namespace NancyLite.Razor
 {
-    public static class BuilderWarpper
+    public static class BuilderWrapper
     {
         private static readonly NancyLiteRazorConfig DefaultConfig = new NancyLiteRazorConfig
         {

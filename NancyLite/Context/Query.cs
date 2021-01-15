@@ -9,12 +9,9 @@ namespace NancyLite
         public static TValue GetQuery<TValue>(this HttpContext context, string queryName, TValue defaultValue = default, Func<string, TValue, TValue> convertor = null)
         {
             if (convertor == null) convertor = StringValueConvertor.ChangeTypeConvertor;
-            if (context.HasQuery(queryName))
-            {
-                var strValue = context.Request.Query[queryName].ToString();
-                return convertor(strValue, defaultValue);
-            }
-            return defaultValue;
+            if (!context.HasQuery(queryName)) return defaultValue;
+            var strValue = context.Request.Query[queryName].ToString();
+            return convertor(strValue, defaultValue);
         }
 
         public static bool HasQuery(this HttpContext context, string queryName)

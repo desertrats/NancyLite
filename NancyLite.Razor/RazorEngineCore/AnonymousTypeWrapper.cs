@@ -23,7 +23,7 @@ namespace RazorEngineCore
                 return false;
             }
 
-            result = propertyInfo.GetValue(this.model, null);
+            result = propertyInfo.GetValue(model, null);
 
             if (result == null)
             {
