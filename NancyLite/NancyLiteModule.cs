@@ -45,7 +45,7 @@ namespace NancyLite
         public readonly NancyLiteAsyncMethodBuilder PutAsync;
         public readonly NancyLiteAsyncMethodBuilder HeadAsync;
 
-        internal bool Add(string method, string path, Func<HttpContext, Task> requestDelegate)
+        protected internal bool Add(string method, string path, Func<HttpContext, Task> requestDelegate)
         {
             var fullPath = BasePath + path;
             if (Routes.ContainsKey((method, fullPath))) return false;
