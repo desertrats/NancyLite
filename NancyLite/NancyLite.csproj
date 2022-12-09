@@ -5,7 +5,7 @@
 	  <Authors>XW76</Authors>
 	  <Company>Sinobiological Inc.</Company>
 	  <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-	  <Version>1.0.3</Version>
+	  <Version>1.0.4</Version>
   </PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
@@ -14,8 +14,8 @@
 
 	<ItemGroup>
 	<FrameworkReference Include="Microsoft.AspNetCore.App" Version="3.1.2" />
-	<PackageReference Include="Microsoft.Extensions.DependencyModel" Version="5.0.0" />
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+	<PackageReference Include="Microsoft.Extensions.DependencyModel" Version="6.0.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
   </ItemGroup>
 
 </Project>
