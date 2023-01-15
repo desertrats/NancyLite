@@ -38,5 +38,21 @@ namespace NancyLite.Razor
             services.AddSingleton(config);
             services.AddSingleton<RazorEnginePlus>();
         }
+
+        public static void RegisterNancyLiteRazor(this IServiceCollection services, Action<RazorEngineCompilationOptionsBuilder> buildAction)
+        {
+            services.AddSingleton(serviceProvider =>
+            {
+                var vp = serviceProvider.GetRequiredService<IViewProvider>();
+                var cvp = serviceProvider.GetRequiredService<ICompiledViewProvider>();
+                return new NancyLiteRazorConfig
+                {
+                    DefaultBuildAction = buildAction,
+                    CompiledViewProvider = cvp,
+                    RawViewProvider = vp
+                };
+            });
+            services.AddSingleton<RazorEnginePlus>();
+        }
     }
 }
