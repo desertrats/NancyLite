@@ -1,8 +1,8 @@
 ﻿using System.Collections;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Dynamic;
-using System.Linq;
 
 namespace NancyLite.Razor
 {
@@ -14,14 +14,14 @@ namespace NancyLite.Razor
         }
         private RazorExpandoObject(IDictionary<string, object> src)
         {
-            _dictionary = new Dictionary<string, object>(src);
+            _dictionary = new ConcurrentDictionary<string, object>(src);
         }
         public RazorExpandoObject Duplicate()
         {
             return new RazorExpandoObject(_dictionary);
         }
 
-        private readonly Dictionary<string, object> _dictionary = new Dictionary<string, object>();
+        private readonly ConcurrentDictionary<string, object> _dictionary = new ConcurrentDictionary<string, object>();
 
         public object this[string key]
         {
@@ -40,7 +40,7 @@ namespace NancyLite.Razor
                 }
                 else
                 {
-                    _dictionary.Add(key, value);
+                    _dictionary.AddOrUpdate(key, value, (k, oldContent) => value);
                 }
             }
         }
@@ -55,12 +55,12 @@ namespace NancyLite.Razor
 
         public void Add(string key, object value)
         {
-            _dictionary.Add(key, value);
+            _dictionary.AddOrUpdate(key, value, (k, oldContent) => value);
         }
 
         public void Add(KeyValuePair<string, object> item)
         {
-            _dictionary.Add(item.Key, item.Value);
+            _dictionary.AddOrUpdate(item.Key, item.Value, (key, oldContent) => item.Value);
         }
 
         public void Clear()
@@ -90,12 +90,12 @@ namespace NancyLite.Razor
 
         public bool Remove(string key)
         {
-            return _dictionary.Remove(key);
+            return _dictionary.Remove(key, out _);
         }
 
         public bool Remove(KeyValuePair<string, object> item)
         {
-            return _dictionary.Remove(item.Key);
+            return _dictionary.Remove(item.Key, out _);
         }
 
         public override bool TryGetMember(GetMemberBinder binder, out object result)
@@ -119,14 +119,7 @@ namespace NancyLite.Razor
         public override bool TrySetMember(SetMemberBinder binder, object value)
         {
             var name = binder.Name;
-            if (_dictionary.ContainsKey(name))
-            {
-                _dictionary[name] = value;
-            }
-            else
-            {
-                _dictionary.Add(name, value);
-            }
+            _dictionary.AddOrUpdate(name, value, (key, oldContent) => value);
             return true;
         }
 
