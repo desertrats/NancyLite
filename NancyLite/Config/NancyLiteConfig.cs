@@ -21,9 +21,9 @@ namespace NancyLite
 
         public void RegisterRouter(string method, string folder, string path)
         {
-            if(!_allRouter.ContainsKey(folder))_allRouter.Add(folder, new Dictionary<string, List<string>>());
+            if (!_allRouter.ContainsKey(folder)) _allRouter.Add(folder, new Dictionary<string, List<string>>());
             if (!_allRouter[folder].ContainsKey(method)) _allRouter[folder].Add(method, new List<string>());
-            if(!_allRouter[folder][method].Contains(path))  _allRouter[folder][method].Add(path);
+            if (!_allRouter[folder][method].Contains(path)) _allRouter[folder][method].Add(path);
         }
 
         public string Report()

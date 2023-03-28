@@ -38,7 +38,7 @@ namespace NancyLite
         public readonly NancyLiteMethodBuilder Put;
         public readonly NancyLiteMethodBuilder Head;
 
-        
+
         public readonly NancyLiteAsyncMethodBuilder GetAsync;
         public readonly NancyLiteAsyncMethodBuilder PostAsync;
         public readonly NancyLiteAsyncMethodBuilder DeleteAsync;

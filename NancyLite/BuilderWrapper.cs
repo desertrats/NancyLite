@@ -37,7 +37,7 @@ namespace NancyLite
                 {
                     foreach (var ((method, path), value) in module.Routes)
                     {
-                        config.RegisterRouter(method,module.BasePath, path);
+                        config.RegisterRouter(method, module.BasePath, path);
                         var conventionBuilder = builder.MapMethods
                         (
                             path,

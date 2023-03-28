@@ -1,0 +1,5 @@
+﻿@using NancyLite.Razor.Test
+@inherits RazorEngineCore.RazorEngineTemplateBase<QuickTestModel>
+<div>我是布局页 @ViewBag.Notify_Login</div>
+@Html.Partial("NestViewTest/Partial", Model.ExtraInfo)
+<div>我尝试在布局页中展示分部视图中的ViewBag:@ViewBag.ExistPartial</div>

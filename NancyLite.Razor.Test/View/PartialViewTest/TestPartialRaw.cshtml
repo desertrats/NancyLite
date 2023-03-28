@@ -1,0 +1,8 @@
+﻿@{
+    foreach (string item in ViewBag.rawList)
+    {
+        @Html.Raw(item)
+        ;
+    }
+}
+<script>var jsonObj = @Html.Raw(ViewBag.jsonRaw);</script>

@@ -1,11 +1,19 @@
-﻿using System;
+﻿using Microsoft.CodeAnalysis;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
 namespace RazorEngineCore
 {
-    public class RazorEngineCompilationOptionsBuilder
+    /// <summary>
+    /// <see cref="RazorEngineCompilationOptions"/>的Builder实现
+    /// </summary>
+    public class RazorEngineCompilationOptionsBuilder : IRazorEngineCompilationOptionsBuilder
     {
+        /// <summary>
+        /// 要进行Builder的模板编译选项信息
+        /// </summary>
         public RazorEngineCompilationOptions Options { get; set; }
 
         public RazorEngineCompilationOptionsBuilder(RazorEngineCompilationOptions options = null)
@@ -21,7 +29,6 @@ namespace RazorEngineCore
 
         public void AddAssemblyReference(Assembly assembly)
         {
-            if (Options.ReferencedAssemblies.Contains(assembly)) return;
             Options.ReferencedAssemblies.Add(assembly);
         }
 
@@ -35,9 +42,14 @@ namespace RazorEngineCore
             }
         }
 
+        public void AddMetadataReference(MetadataReference reference)
+        {
+            Options.MetadataReferences.Add(reference);
+        }
+
         public void AddUsing(string namespaceName)
         {
-            if (!Options.DefaultUsings.Contains(namespaceName)) Options.DefaultUsings.Add(namespaceName);
+            Options.DefaultUsings.Add(namespaceName);
         }
 
         public void Inherits(Type type)
@@ -46,9 +58,16 @@ namespace RazorEngineCore
             AddAssemblyReference(type);
         }
 
-        private static string RenderTypeName(Type type)
+        private string RenderTypeName(Type type)
         {
-            var result = type.Namespace + "." + type.Name;
+            IList<string> elements = new List<string>
+            {
+                type.Namespace,
+                RenderDeclaringType(type.DeclaringType),
+                type.Name
+            };
+
+            var result = string.Join(".", elements.Where(e => !string.IsNullOrWhiteSpace(e)));
 
             if (result.Contains('`'))
             {
@@ -61,6 +80,23 @@ namespace RazorEngineCore
             }
 
             return result + "<" + string.Join(",", type.GenericTypeArguments.Select(RenderTypeName)) + ">";
+        }
+
+        private static string RenderDeclaringType(Type type)
+        {
+            if (type == null)
+            {
+                return null;
+            }
+
+            var parent = RenderDeclaringType(type.DeclaringType);
+
+            if (string.IsNullOrWhiteSpace(parent))
+            {
+                return type.Name;
+            }
+
+            return parent + "." + type.Name;
         }
     }
 }

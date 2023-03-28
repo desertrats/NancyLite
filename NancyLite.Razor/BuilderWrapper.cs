@@ -6,8 +6,14 @@ using System.Reflection;
 
 namespace NancyLite.Razor
 {
+    /// <summary>
+    /// 声明了将NancyLiteRazor注册到IOC容器中的扩展方法
+    /// </summary>
     public static class BuilderWrapper
     {
+        /// <summary>
+        /// 默认的注册配置
+        /// </summary>
         private static readonly NancyLiteRazorConfig DefaultConfig = new NancyLiteRazorConfig
         {
             DefaultBuildAction = x => x.AddAssemblyReference(Assembly.GetEntryAssembly()),
@@ -18,16 +24,14 @@ namespace NancyLite.Razor
         {
             if (config == null)
             {
-                services.AddSingleton(DefaultConfig);
+                config = DefaultConfig;
             }
-            else
-            {
-                services.AddSingleton(config);
-            }
+
+            services.AddSingleton(_ => config);
             services.AddSingleton<RazorEnginePlus>();
         }
 
-        public static void RegisterNancyLiteRazor(this IServiceCollection services, Action<RazorEngineCompilationOptionsBuilder> buildAction, IViewProvider viewProvider, ICompiledViewProvider compiledViewProvider)
+        public static void RegisterNancyLiteRazor(this IServiceCollection services, Action<IRazorEngineCompilationOptionsBuilder> buildAction, IViewProvider viewProvider, ICompiledViewProvider compiledViewProvider)
         {
             var config = new NancyLiteRazorConfig
             {
@@ -35,11 +39,11 @@ namespace NancyLite.Razor
                 CompiledViewProvider = compiledViewProvider,
                 RawViewProvider = viewProvider
             };
-            services.AddSingleton(config);
+            services.AddSingleton(_ => config);
             services.AddSingleton<RazorEnginePlus>();
         }
 
-        public static void RegisterNancyLiteRazor(this IServiceCollection services, Action<RazorEngineCompilationOptionsBuilder> buildAction)
+        public static void RegisterNancyLiteRazor(this IServiceCollection services, Action<IRazorEngineCompilationOptionsBuilder> buildAction)
         {
             services.AddSingleton(serviceProvider =>
             {

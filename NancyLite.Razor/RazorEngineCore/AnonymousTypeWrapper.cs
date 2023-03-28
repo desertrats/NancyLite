@@ -1,9 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.Dynamic;
 using System.Linq;
 
 namespace RazorEngineCore
 {
+    /// <summary>
+    /// 匿名类型的wrapper
+    /// </summary>
     public class AnonymousTypeWrapper : DynamicObject
     {
         private readonly object model;
@@ -30,17 +34,45 @@ namespace RazorEngineCore
                 return true;
             }
 
-            var type = result.GetType();
+            //var type = result.GetType();
 
             if (result.IsAnonymous())
             {
                 result = new AnonymousTypeWrapper(result);
             }
 
-            if (type.IsArray)
+            if (result is IDictionary dictionary)
             {
-                result = ((IEnumerable<object>)result).Select(e => new AnonymousTypeWrapper(e)).ToList();
+                var keys = new List<object>();
+
+                foreach (var key in dictionary.Keys)
+                {
+                    keys.Add(key);
+                }
+
+                foreach (var key in keys)
+                {
+                    if (dictionary[key].IsAnonymous())
+                    {
+                        dictionary[key] = new AnonymousTypeWrapper(dictionary[key]);
+                    }
+                }
             }
+            else if (result is IEnumerable enumerate && !(result is string))
+            {
+                result = enumerate.Cast<object>()
+                        .Select(e =>
+                        {
+                            if (e.IsAnonymous())
+                            {
+                                return new AnonymousTypeWrapper(e);
+                            }
+
+                            return e;
+                        })
+                        .ToList();
+            }
+
 
             return true;
         }

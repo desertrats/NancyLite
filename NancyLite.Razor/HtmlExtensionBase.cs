@@ -1,5 +1,8 @@
 ﻿namespace NancyLite.Razor
 {
+    /// <summary>
+    /// 针对@Html方法支持的扩展
+    /// </summary>
     public class HtmlExtensionBase
     {
         public HtmlExtensionBase(dynamic viewBag)
@@ -12,16 +15,28 @@
         }
 
         private RazorEnginePlus _compiler;
-        private dynamic _viewBag;
+        private readonly dynamic _viewBag;
+
+        /// <summary>
+        /// 对@Html.Partial的支持
+        /// </summary>
+        /// <param name="viewName"></param>
+        /// <param name="model"></param>
+        /// <returns></returns>
         public virtual string Partial(string viewName, dynamic model = null)
         {
             if (_compiler == null)
             {
                 return null;
             }
-            return _compiler.RenderRawSub(viewName, ref _viewBag, model);
+            return _compiler.RenderRaw(viewName, model, _viewBag, true);
         }
 
+        /// <summary>
+        /// 对@Html.Raw的支持
+        /// </summary>
+        /// <param name="viewName"></param>
+        /// <returns></returns>
         public virtual string Raw(string viewName)
         {
             return viewName;
