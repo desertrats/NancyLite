@@ -1,11 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netcoreapp3.1;net5.0</TargetFrameworks>
+    <TargetFrameworks>netcoreapp3.1;net5.0;net6.0</TargetFrameworks>
     <Authors>XW76</Authors>
     <Company>Sinobiological Inc.</Company>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-	  <Version>1.0.6</Version>
+	  <Version>1.0.7</Version>
 	  <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
 
@@ -14,9 +14,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<FrameworkReference Include="Microsoft.AspNetCore.App" Version="3.1.2" />
 		<PackageReference Include="Microsoft.AspNetCore.Razor.Language" Version="6.0.2" />
-		<PackageReference Include="Microsoft.AspNetCore.Razor.Runtime" Version="2.2.0" />
 		<PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.1.0" />
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
 	</ItemGroup>
