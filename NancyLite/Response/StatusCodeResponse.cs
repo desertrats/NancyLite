@@ -20,13 +20,15 @@ namespace NancyLite
             return async context =>
             {
                 context.Response.StatusCode = _statusCode;
-                if (Content != null)
-                {
-                    await context.Response.WriteAsync(Content);
-                }
+
                 if (MimeType != null)
                 {
                     context.Response.ContentType = MimeType;
+                }
+
+                if (Content != null)
+                {
+                    await context.Response.WriteAsync(Content);
                 }
             };
         }
